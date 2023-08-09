@@ -4,6 +4,7 @@ import {ref, reactive} from 'vue';
 //import HelloWorld from './components/HelloWorld.vue'
 import BooksComp from './components/BooksComp.vue';
 import ProgressComp from './components/ProgressComp.vue';
+import ProgressTagComp from './components/ProgressTagComp.vue';
 
   let books = reactive([
       {
@@ -86,6 +87,11 @@ function bookIsRead(id) {
       <BooksComp @bookIsRead="bookIsRead($event)"  :books="books"/>
       
       <ProgressComp :items="books"/>
+
+      <br>
+      <br>
+
+      <ProgressTagComp :items="books"/>
 
     </div>
   </div>
