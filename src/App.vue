@@ -1,10 +1,11 @@
 <script setup>
 
-import {ref, reactive} from 'vue';
+import {ref, reactive, computed} from 'vue';
 //import HelloWorld from './components/HelloWorld.vue'
 import BooksComp from './components/BooksComp.vue';
 import ProgressComp from './components/ProgressComp.vue';
 import ProgressTagComp from './components/ProgressTagComp.vue';
+import AddBookComp from './components/AddBookComp.vue';
 
   let books = reactive([
       {
@@ -45,6 +46,21 @@ import ProgressTagComp from './components/ProgressTagComp.vue';
       },
 ]);
 
+const newId = computed(() => {
+  let idInitial = books[0].id ? books[0].id : 0;
+
+  if(books.length > 0) {
+   for(let i = 0; i < books.length; i++) {
+     if(idInitial < books[i].id) {
+      idInitial = books[i].id;
+     }
+   }
+  }
+
+  idInitial++;
+  return idInitial;
+});
+
 function bookIsRead(id) {
   console.log("emit ok", id);
  
@@ -67,16 +83,28 @@ function bookIsRead(id) {
   console.log(books);
 }
 
+let showAddBook = ref(false);
+
+function closeAddBook() {
+  console.log("Close Book");
+  showAddBook.value = !showAddBook.value;
+}
+
+function addNewBook() {
+  console.log("Add New Book");
+  showAddBook.value = !showAddBook.value;
+}
+
 </script>
 
 <template>
   
-  <div class="container">
+  <div v-if="!showAddBook" class="container">
     <h1>📖 Meus Livros</h1>
     <div class="header-btns">
       <button
         class="btn"
-        
+        @click="closeAddBook()"
       >
         Adicionar Livro +
       </button>
@@ -94,6 +122,10 @@ function bookIsRead(id) {
       <ProgressTagComp :items="books"/>
 
     </div>
+  </div>
+
+  <div v-if="showAddBook" class="container">
+    <AddBookComp @closeAddBook="closeAddBook()" @addNewBook="addNewBook()" :newId="newId"/>
   </div>
 
 </template>
