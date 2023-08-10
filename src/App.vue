@@ -90,8 +90,10 @@ function closeAddBook() {
   showAddBook.value = !showAddBook.value;
 }
 
-function addNewBook() {
+function addNewBook(newBook) {
   console.log("Add New Book");
+  console.log(newBook);
+  books.push(newBook);
   showAddBook.value = !showAddBook.value;
 }
 
@@ -125,7 +127,7 @@ function addNewBook() {
   </div>
 
   <div v-if="showAddBook" class="container">
-    <AddBookComp @closeAddBook="closeAddBook()" @addNewBook="addNewBook()" :newId="newId"/>
+    <AddBookComp @closeAddBook="closeAddBook()" @addNewBook="addNewBook($event)" :newId="newId"/>
   </div>
 
 </template>

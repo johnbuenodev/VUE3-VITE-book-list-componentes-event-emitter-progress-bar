@@ -11,8 +11,14 @@ function closeAddBook() {
 }
 
 function addNewBook() {
-  emit('addNewBook'
-  /*, book*/);
+    console.log(newBook);
+    if(newBook.title !== "" && newBook.author !== "") {
+
+        console.log(newBook);
+        emit('addNewBook', newBook);
+
+    }
+
 }
 
 let newBook = reactive(
@@ -43,9 +49,11 @@ let newBook = reactive(
         <div class="form-control">
         <label>Título <span>(ID - {{ newBook.id }})</span></label>
         <input
+            required
             type="text"
             name="text"
             placeholder="Adicione o título"
+            v-model="newBook.title"
         />
         </div>
         <div class="form-control">
@@ -54,14 +62,17 @@ let newBook = reactive(
             type="text" 
             name="cover" 
             placeholder="Adicione o link da imagem de capa"
+            v-model="newBook.cover"
             />
         </div>
         <div class="form-control">
         <label>Autor</label>
         <input
+            required
             type="text"
             name="author"
             placeholder="Adicione o autor"
+            v-model="newBook.author"
         />
         </div>
         <div class="form-control">
@@ -70,6 +81,7 @@ let newBook = reactive(
             type="text" 
             name="isbn" 
             placeholder="Adicione o ISBN" 
+            v-model="newBook.isbn"
         />
         </div>
         <div class="form-control form-control-check">
@@ -77,11 +89,13 @@ let newBook = reactive(
             type="checkbox" 
             name="readIt" 
             id="readIt" 
+            v-model="newBook.isRead"
             />
         <label for="readIt">Já li o livro</label>
         </div>
  
-        <button type="submit" class="btn btn-block" @click="addNewBook()">Salvar livro</button>
+        <!-- preventDefault quando aplica o submit para não recarregar a pagina -->
+        <button  class="btn btn-block" type="submit" @click.prevent="addNewBook()">Salvar livro</button>
     </form>
 
 </template>
